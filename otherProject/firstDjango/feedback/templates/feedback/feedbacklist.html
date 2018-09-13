@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+<h3>
+    <img src="{% static 'images/note.jpg' %}" style="width:50px" />
+    Feedback List
+</h3>
+{% endblock title %}
+
+{% block content %}
+<p>
+    <a href="{% url 'create' %}">+ Create New</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Comment</th>
+    </tr>
+    {% for item in feedbacks %}
+        <tr>
+            <td><!-- 글번호 -->
+                <a href="{% url 'edit' id=item.id %}">{{ item.id }}</a>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.comment }}</td>
+        </tr>
+    {% end for %}
+</table>
+{% endblock content %}

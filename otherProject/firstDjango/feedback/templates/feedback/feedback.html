@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+<h3>
+    Your Feedback
+</h3>
+{% endblock title %}
+
+{% block content %}
+<p>
+    <a href="{% url 'list' %}">Go to Feedback List</a>
+</p>
+<div>
+    <form method="POST">
+        <!--
+         {% csrf_token %}
+         CSRF (Cross Site Request Forgeries)는 웹 해킹 기법의 하나로 Django는 이를 방지하기 위한 기능을 기본적으로
+         제공하고 있다. Django에서 HTTP POST, PUT, DELETE을 할 경우 이 태그를 넣어 주어야 한다.
+        -->
+        {% csrf_token %}
+        {{ form.as_ }}
+        <button type="submit">저장</button>
+    </form>
+</div>
+{% endblock content %}
