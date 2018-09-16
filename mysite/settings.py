@@ -56,9 +56,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+'''
+DIRS 옵션은 Django가 템플릿들을 찾는 디렉토리 경로를 지정하는 것으로, 원래는 비어 있었는데, 위의 같이 Base 디렉토리(BASE_DIR) 
+밑의 templates 폴더 경로를 추가하였다. 즉, BASE_DIR\templates 가 경로에 추가되어야만 base.html 템플릿을 찾을 수 있게 된다. 
+만약 DIRS에 여러 경로가 추가되면, Django는 경로 순서대로 검색하면서 템플릿을 찾게 된다.
+
+APP_DIRS 옵션은 Django가 Django App 안의 templates 폴더에서 템플릿들을 찾을 것인지의 여부를 설정하는 것이다. 
+디폴트로 True가 설정되어 있어서 기본적으로 App안의 templates 폴더를 검색하여 템플릿을 찾게 된다.
+'''
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 아래와 같이 Base 디렉토리(BASE_DIR) 밑의 templates 폴더 경로를 추가하였다. 즉, BASE_DIR\templates 가 경로에
+        # 추가되어야만 base.html 템플릿을 찾을 수 있게 된다. 만약 DIRS에 여러 경로가 추가되면, Django는 경로 순서대로
+        # 검색하면서 템플릿을 찾게 된다.
+        #'DIRS': [ os.path.join(BASE_DIR, 'templates') ], # 프로젝트 바로 밑에 templates 폴더를 만든 경우.
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
