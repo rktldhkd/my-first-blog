@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>New post</h1>
+    <!-- 폼을 제출할 때, request에는 우리가 입력했던 데이터들을 가지고 있는데, request.POST가 이 데이터를 가지고 있습니다 -->
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }} <!-- view에서 넘어온 PostForm 객체 -->
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}

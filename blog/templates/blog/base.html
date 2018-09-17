@@ -14,7 +14,11 @@
 </head>
 <body>
     <div class="page-header">
-        <h1><a href="">Django Blog</a></h1>
+        {% if user.is_authenticated %} <!-- 로그인 확인. -->
+            <!-- 로그인 상태에서만 보여줄 화면 -->
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
+        <h1><a href="{% url 'post_list' %}">Django Blog</a></h1>
     </div>
 
     <div class="content container">

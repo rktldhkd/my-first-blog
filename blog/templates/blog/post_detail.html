@@ -1,12 +1,17 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <div>
+    <div class="post">
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float:right;">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+        {% endif %}
         <!--#{% if ... %} ... {% endif %}라는 템플릿 태그인데, 내용이 있는지 확인할 때 사용합니다.-->
         {% if post.published_date %}
-            <div>
+            <span class="date" style="float:right; margin:6px 6px 0 0;">
                 {{ post.published_date }}
-            </div>
+            </span>
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>

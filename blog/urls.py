@@ -12,4 +12,6 @@ urlpatterns = [
     # /은 다음에 / 가 한 번 더 와야 한다는 의미입니다.
     # $는 "마지막"을 말합니다. 그 뒤로 더는 문자가 오면 안 됩니다.
     re_path(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
+    re_path(r'^post/new/$', views.post_new, name='post_new'),
+    re_path(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit')
 ]
