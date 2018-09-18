@@ -15,3 +15,23 @@ class PostForm(forms.ModelForm):
         # - author는 현재 로그인 하고 있는 사람이 될 것이고 (바로 당신이요!) 그리고 created_date는 글이
         # 등록되는 시간이 될 것입니다. (예를 들어, 코드 상에서요), 됐죠?
         fields  = ('title', 'text',)
+
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '아이디',
+            }
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '비밀번호',
+            }
+        )
+    )

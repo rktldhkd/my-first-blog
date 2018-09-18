@@ -1,5 +1,4 @@
 body {
-    padding-left: 15px;
 }
 
 h1 a {
@@ -50,4 +49,30 @@ h1, h2, h3, h4{
 
 .post h1 a, .post h1 a:visited {
     color: #000000;
+}
+
+.listText{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+    height: 20px;
+}
+
+.loginErr{
+    margin: 5px 0 5px 0;
+    padding: 6px 6px 6px 4px;
+    background-color: #FAAC58;
+    font-family: unset;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.loginTbl{
+    border:1px solid gray;
+}
+
+.loginTbl > th, td{
+    border: 1px solid transparent;
+    padding: 3px;
 }

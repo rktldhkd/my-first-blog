@@ -153,3 +153,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+
+
+#직접 로그인,로그아웃하면, 최상 위 index 레벨에서 로그인이 성공적으로 될 거에요.
+#LOGIN_REDIRECT_URL 은 login() 뷰에서 로그인 처리가 성공한 후 next 파라미터가 지정되지 않았을 경우 이 항목의 url로 리다이렉트된다.
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

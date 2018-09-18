@@ -1,7 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import (
+        login as django_login,
+        logout as djangp_logout,
+        authenticate
+    )
+
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, LoginForm
+
 
 # Create your views here.
 def post_list(request):
@@ -13,6 +21,7 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk) #pk에 해당하는 Post가 없을 경우, 멋진 페이지(페이지 찾을 수 없음 404 : Page Not Found 404)를 보여줄 거에요.
     return render(request, 'blog/post_detail.html', {'post' : post})
 
+@login_required(login_url='/accounts/login/')
 def post_new(request):
     # 폼을 제출할때, request에는 우리가 입력했던 데이터들을 가지고 있는데, request.POST가 이 데이터를가지고있습니다 -->
     # 이제 view 에서 두 상황으로 나누어 처리해볼게요.
@@ -34,6 +43,7 @@ def post_new(request):
 
     return render(request, 'blog/post_edit.html', {'form':form})
 
+@login_required(login_url='/accounts/login/')
 def post_edit(request, pk):
     # 첫 번째: url로부터 추가로 pk 매개변수를 받아서 처리합니다.
     # 두 번째: get_object_or_404(Post, pk=pk)를 호출하여 수정하고자 하는 글의 Post 모델 인스턴스(instance)로
@@ -52,3 +62,47 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
 
     return render(request, 'blog/post_edit.html', {'form' : form})
+
+@login_required(login_url='/accounts/login/')
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('post_list')
+
+
+
+def login(request):
+    if request.method == 'POST':
+        # Data bounded form인스턴스 생성
+        login_form = LoginForm(request.POST)
+        # 유효성 검증에 성공할 경우
+        if login_form.is_valid():
+            # form으로부터 username, password값을 가져옴
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+
+            # 가져온 username과 password에 해당하는 User가 있는지 판단한다
+            # 존재할경우 user변수에는 User인스턴스가 할당되며,
+            # 존재하지 않으면 None이 할당된다
+            user = authenticate(
+                username=username,
+                password=password
+            )
+            # 인증에 성공했을 경우
+            if user:
+                # Django의 auth앱에서 제공하는 login함수를 실행해 앞으로의 요청/응답에 세션을 유지한다
+                django_login(request, user)
+                # Post목록 화면으로 이동
+                return redirect('post_list')
+            # 인증에 실패하면 login_form에 non_field_error를 추가한다
+            login_form.add_error(None, '아이디 또는 비밀번호가 올바르지 않습니다')
+    else:
+        login_form = LoginForm()
+    context = {
+        'login_form': login_form,
+    }
+    return render(request, 'registration/login.html', context)
+
+def logout(request):
+    djangp_logout(request)
+    return redirect('post_list')

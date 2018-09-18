@@ -14,9 +14,18 @@
 </head>
 <body>
     <div class="page-header">
-        {% if user.is_authenticated %} <!-- 로그인 확인. -->
+        {% if user.is_authenticated %} <!-- 인증여부 확인. 로그인 확인. -->
             <!-- 로그인 상태에서만 보여줄 화면 -->
             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            <p class="top-menu">
+                Hello {{ user.username }}
+                <small>
+                    (<a href="{% url 'logout' %}">Log out</a>)
+                </small>
+            </p>
+        {% else %}
+            <!-- 로그인 버튼, 자물쇠 모양으로 스타일을 주었다. -->
+            <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
         {% endif %}
         <h1><a href="{% url 'post_list' %}">Django Blog</a></h1>
     </div>
