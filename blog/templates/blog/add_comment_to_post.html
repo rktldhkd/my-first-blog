@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>New comment</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        <!-- view에서 넘어온 CommentForm -->
+        <!-- form의 양식은 forms.py에서 폼에서 받을 데이터나 html, html의 속성들등을 정의할 수 있다. -->
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Send</button>
+    </form>
+{% endblock %}

@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django.urls import path, re_path, include
 from . import views
+
+#아래 2개 : 업로드파일, 이미지첨부기능위함.
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     re_path(r'^$', views.post_list, name='post_list'),
@@ -15,6 +22,15 @@ urlpatterns = [
     re_path(r'^post/new/$', views.post_new, name='post_new'),
     re_path(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     re_path(r'^post/(?P<pk>\d+)/remove/$', views.post_remove, name='post_remove'),
+    re_path(r'^post/(?P<pk>\d+)/comment/add/$', views.add_comment_to_post, name="add_comment_to_post"),
     re_path(r'^login/$', views.login, name='login'), # 로그인 url
     re_path(r'^logout/$', views.logout, name='logout'), # 로그아웃 url
+    re_path(r'^signup/$', views.signup, name='signup'),
+    re_path(r'^download_file/(?P<file_name>.*)/$', views.download_file, name='download_file'),
+    #?P<file_name>\w{0,50}) : 문자만 받는다., .* : 전부 다 받는다.
 ]
+
+#static 파일과는 다르게 개발서버에서 기본 서빙 미지원
+#개발 편의성 목적으로 서빙 rule 추가 가능
+#settings.DEBUG = False 일때는 static 함수에서 빈 리스트 리턴
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #업로드파일, 이미지첨부기능위함.

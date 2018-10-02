@@ -24,7 +24,7 @@ urlpatterns = [
 
     # 만약 r'' 를 r'^blog/' 로 지정했다면, URL이 http://~~/blog/ 까지는 여기서 지정한 것까지 붙고,
     # 이다음 blog/~의  ~이하 경로는 blog.urls 파일에서 지정한 경로들이 자동으로 붙는다.
-    re_path(r'', include('blog.urls')), # 해당 경로 아래 blog.urls에 지정된 경로가 붙는다.
+    re_path(r'^blog/', include('blog.urls')), # 해당 경로 아래 blog.urls에 지정된 경로가 붙는다.
 
     #re_path(r'^accounts/', include('django.contrib.auth.urls')), # 장고의 가장 기본적인 로그인/아웃등의 인증 처리 url 설정.
     # re_path(r'^accounts/login/$', views.login, name='login'),

@@ -23,6 +23,7 @@
             <!-- url 'post_detail' 에서 ''안의 값은 urls파일에서 지정한 name값과 매핑되는 듯. -->
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p class="listText">{{ post.text|linebreaksbr }}</p> <!-- |linebreakssbr : 파이프 문자. <br/>과 같은 역할 -->
+            <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
         </div>
     {% endfor %}
 {% endblock %}

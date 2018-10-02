@@ -17,6 +17,58 @@
             </span>
         {% endif %}
         <h1>{{ post.title }}</h1>
+
+        <p class="file_area">
+            {% if post.file %}
+                <!-- settings.MEDIA_URL 설정은 언제라도 변경될 수 있다.
+                    따라서 ImageField, FileField 의 .url 속성을 사용하는게 좋다 (settings.MEDIA_URL이 prefix로 붙음)
+                    참고로 .path 속성은 파일시스템 상의 절대경로 (settings.MEDIA_ROOT 가 Prefix로 붙음)
+                -->
+                <div>path :{{ post.file.path }} <!-- /Users/nickname/documents/practice/media/jeju_pic.png --></div>
+                <div>url : {{ post.file.url }} <!-- /media/jeju_pic.png --></div>
+                <div>
+                    <!-- 파일 다운로드 -->
+                    <a id="id_uploaded_file" href="{% url 'download_file' file_name=post.file.name %}">{{ post.file.name }}</a>
+                </div>
+            {% endif %}
+        </p>
+
+        <p class="image_area">
+            {% if post.photo %}
+                <!-- settings.MEDIA_URL 설정은 언제라도 변경될 수 있다.
+                    따라서 ImageField, FileField 의 .url 속성을 사용하는게 좋다 (settings.MEDIA_URL이 prefix로 붙음)
+                    참고로 .path 속성은 파일시스템 상의 절대경로 (settings.MEDIA_ROOT 가 Prefix로 붙음)
+                -->
+                <div>path :{{ post.photo.path }} <!-- /Users/nickname/documents/practice/media/jeju_pic.png --></div>
+                <div>url : {{ post.photo.url }} <!-- /media/jeju_pic.png --></div>
+                <div>
+                    <!-- 이미지 다운로드 -->
+                    <a id="id_uploaded_photo" href="{% url 'download_file' file_name=post.photo.name %}">{{ post.photo.name }}</a>
+                    <!--
+                    다운로드가 아닌 새창에서 이미지 띄우기가 됨.
+                    <a id="id_uploaded_photo" href="/blog{{ post.photo.url }}">{{ post.photo.name }}</a>
+                    -->
+
+                    <img src="/blog{{ post.photo.url }}" alt="">
+                </div>
+            {% endif %}
+        </p>
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
+
+    <hr><!-- 댓글 -->
+    {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    {% endif %}
+    {% for comment in post.comments.all %}
+        <div class="comment">
+            <div class="comment_info">
+                <span><strong>{{ comment.author }}</strong></span>
+                <span class="date">{{ comment.created_date }}</span>
+            </div>
+            <p>{{ comment.text }}</p>
+        </div>
+    {% empty %}
+        <p>No comments here yet :(</p>
+    {% endfor %}
 {% endblock %}

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for mysite project.
 
@@ -154,8 +156,15 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+# 각 media 파일에 대한 URL Prefix
+MEDIA_URL = '/media/'
+
+# 업로드한 파일이 저장될 공간.
+# 'media'라고 지정하면 프로젝트 바로 아래에 media폴더를 가리킨다.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
 
 #직접 로그인,로그아웃하면, 최상 위 index 레벨에서 로그인이 성공적으로 될 거에요.
 #LOGIN_REDIRECT_URL 은 login() 뷰에서 로그인 처리가 성공한 후 next 파라미터가 지정되지 않았을 경우 이 항목의 url로 리다이렉트된다.
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL='/login/'
+LOGIN_REDIRECT_URL = '/' #urls.py에서 해당 url 감지해서 적당한 view로 매핑시켜줌
 LOGOUT_REDIRECT_URL = '/'
