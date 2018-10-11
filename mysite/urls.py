@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.contrib.auth import views
+from django.contrib.auth import views as auth_view
 from blog import views
 
 #프로젝트의 종합 기본 경로 지정.
