@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.contrib.auth import views
+from blog import views
 
 #프로젝트의 종합 기본 경로 지정.
 #큰 분류/대분류를 지정하는 곳.
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
+
+    #pythonanywhere에서 첫 페이지가 안나와서 따로 또 선언했다.
+    re_path(r'^$', views.post_list, name='post_list'),
 
     # 만약 r'' 를 r'^blog/' 로 지정했다면, URL이 http://~~/blog/ 까지는 여기서 지정한 것까지 붙고,
     # 이다음 blog/~의  ~이하 경로는 blog.urls 파일에서 지정한 경로들이 자동으로 붙는다.
