@@ -2,13 +2,13 @@
 
 {% block content %}
     <div class="post">
-        {% if user.is_authenticated %}
-            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" style="float:right;">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
-            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float:right; margin-right:4px">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a>
+        {% if user.is_authenticated and post.author == user.username %}
+                <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" style="float:right;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}" style="float:right; margin-right:4px">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
         {% endif %}
         <!--#{% if ... %} ... {% endif %}라는 템플릿 태그인데, 내용이 있는지 확인할 때 사용합니다.-->
         {% if post.published_date %}
@@ -53,7 +53,10 @@
                 </div>
             {% endif %}
         </p>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{ post.text|linebreaksbr }} </br>
+            {{ post.author }}</br>
+            {{ user.username }}
+        </p>
     </div>
 
     <hr><!-- 댓글 -->
